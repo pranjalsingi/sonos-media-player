@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Sonos Controller</title>
+
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    </head>
+    <body class="container">
+        <div class="row mt-5 d-flex justify-content-center">
+            <h3>Play Facebook Video on SONOS</h3>
+        </div>
+        <div class="row mt-2 d-flex justify-content-center">
+            <div class="col-8">
+                <form id='target-form'>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="video-url" aria-describedby="emailHelp" placeholder="Facebook Video URL">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-1 col-sm-2">
+                <button id="play" class="btn btn-outline-dark">
+                    <svg class="bi bi-play-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-2">
+                <button id="pause" class="btn btn-outline-dark">
+                    <svg class="bi bi-pause-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.5 3.5A1.5 1.5 0 017 5v6a1.5 1.5 0 01-3 0V5a1.5 1.5 0 011.5-1.5zm5 0A1.5 1.5 0 0112 5v6a1.5 1.5 0 01-3 0V5a1.5 1.5 0 011.5-1.5z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-2">
+                <button id="increase" class="btn btn-outline-dark">
+                    <svg class="bi bi-volume-up-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.536 14.01A8.473 8.473 0 0014.026 8a8.473 8.473 0 00-2.49-6.01l-.708.707A7.476 7.476 0 0113.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+                        <path d="M10.121 12.596A6.48 6.48 0 0012.025 8a6.48 6.48 0 00-1.904-4.596l-.707.707A5.483 5.483 0 0111.025 8a5.483 5.483 0 01-1.61 3.89l.706.706z"/>
+                        <path d="M8.707 11.182A4.486 4.486 0 0010.025 8a4.486 4.486 0 00-1.318-3.182L8 5.525A3.489 3.489 0 019.025 8 3.49 3.49 0 018 10.475l.707.707z"/>
+                        <path fill-rule="evenodd" d="M6.717 3.55A.5.5 0 017 4v8a.5.5 0 01-.812.39L3.825 10.5H1.5A.5.5 0 011 10V6a.5.5 0 01.5-.5h2.325l2.363-1.89a.5.5 0 01.529-.06z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="col-md-1 col-sm-2">
+                <button id="decrease" class="btn btn-outline-dark">
+                    <svg class="bi bi-volume-down-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8.717 3.55A.5.5 0 019 4v8a.5.5 0 01-.812.39L5.825 10.5H3.5A.5.5 0 013 10V6a.5.5 0 01.5-.5h2.325l2.363-1.89a.5.5 0 01.529-.06z" clip-rule="evenodd"/>
+                        <path d="M10.707 11.182A4.486 4.486 0 0012.025 8a4.486 4.486 0 00-1.318-3.182L10 5.525A3.489 3.489 0 0111.025 8c0 .966-.392 1.841-1.025 2.475l.707.707z"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+        <script type="text/javascript">
+            songPlaying = false
+
+            $(document).ready(function(){
+
+                $('#target-form').submit(function(e){
+                    video_url = $('#video-url').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://0.0.0.0:5000/play_url',
+                        data: JSON.stringify({url: video_url}),
+                        contentType : 'application/json'
+                    });
+                    e.preventDefault();
+                })
+
+                $('#play').click(function(){
+                    $.ajax('http://0.0.0.0:5000/play');
+                })
+
+                $('#pause').click(function(){
+                    $.ajax('http://0.0.0.0:5000/pause');
+                })
+
+                $('#increase').click(function(){
+                    $.ajax('http://0.0.0.0:5000/increase');
+                })
+
+                $('#decrease').click(function(){
+                    $.ajax('http://0.0.0.0:5000/decrease');
+                })
+            })
+        </script>
+
+    </body>
+</html>
