@@ -4,7 +4,6 @@ import soco
 from flask import Flask, render_template, url_for, request
 
 from get_fb_video_uri import get_uri
-from get_yt_video_uri import get_uris
 
 app = Flask(__name__)
 
