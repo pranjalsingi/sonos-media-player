@@ -10,6 +10,6 @@ MarkupSafe==1.1.1
 requests==2.23.0
 soco==0.19
 soupsieve==2.0
-urllib3==1.25.9
+urllib3==1.26.5
 Werkzeug==1.0.1
 xmltodict==0.12.0
